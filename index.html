@@ -46,9 +46,44 @@
     h2 {
       margin-top: 0;
     }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background-color: #444;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .back-to-top:hover {
+      background-color: #666;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top::after {
+      content: "↑";
+      font-size: 24px;
+    }
   </style>
 </head>
 <body>
+
+  <div id="section0"><h1>Sectors:</h1></div>
 
   <div class="map-container">
     <div class="sector" id="sector1" onclick="scrollToSection('section1')"></div>
@@ -59,72 +94,31 @@
     <div class="sector" id="sector6" onclick="scrollToSection('section6')"></div>
   </div>
 
-  <div class="content-section" id="section1"><h2>Zone 1</h2><p>Details about Zone 1...
+  <div class="content-section" id="section1"><h2>Zone 1</h2><p>Details about Zone 1...</p></div>
+  <div class="content-section" id="section2"><h2>Zone 2</h2><p>Details about Zone 2...</p></div>
+  <div class="content-section" id="section3"><h2>Zone 3</h2><p>Details about Zone 3...</p></div>
+  <div class="content-section" id="section4"><h2>Zone 4</h2><p>Details about Zone 4...</p></div>
+  <div class="content-section" id="section5"><h2>Zone 5</h2><p>Details about Zone 5...</p></div>
+  <div class="content-section" id="section6"><h2>Zone 6</h2><p>Details about Zone 6...</p></div>
 
-
-
-
-
-
-
-
-    </p></div>
-  <div class="content-section" id="section2"><h2>Zone 2</h2><p>Details about Zone 2...
-
-
-
-
-
-
-
-
-    </p></div>
-  <div class="content-section" id="section3"><h2>Zone 3</h2><p>Details about Zone 3...
-
-
-
-
-
-
-
-
-    </p></div>
-  <div class="content-section" id="section4"><h2>Zone 4</h2><p>Details about Zone 4...
-
-
-
-
-
-
-
-
-    </p></div>
-  <div class="content-section" id="section5"><h2>Zone 5</h2><p>Details about Zone 5...
-
-
-
-
-
-
-
-
-    </p></div>
-  <div class="content-section" id="section6"><h2>Zone 6</h2><p>Details about Zone 6...
-
-
-
-
-
-
-
-
-
-  </p></div>
+  <div class="back-to-top" onclick="scrollToSection('section0')"></div>
 
   <script>
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
+
+    window.addEventListener('scroll', function() {
+      const backToTopButton = document.querySelector('.back-to-top');
+      const section1 = document.getElementById('section1');
+      const section1Position = section1.getBoundingClientRect().top;
+      
+      if (section1Position <= 0) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
   </script>
 
 </body>
