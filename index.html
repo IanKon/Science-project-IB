@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Map Sector Scroll</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      padding: 0;
+    }
+
+    .map-container {
+      position: relative;
+      width: 600px;
+      height: 400px;
+      background-image: url(/Users/ian-kononenko/Downloads/210AFA3F-FBBD-4B0A-AFC2-340CD868470A.png);
+      background-size: cover;
+      border: 2px solid #444;
+      margin: 20px auto;
+    }
+
+    .sector {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border: 2px solid red;
+      cursor: pointer;
+      opacity: 0.3;
+    }
+
+    #sector1 { top: 0; left: 0; }
+    #sector2 { top: 0; left: 200px; }
+    #sector3 { top: 0; left: 400px; }
+    #sector4 { top: 200px; left: 0; }
+    #sector5 { top: 200px; left: 200px; }
+    #sector6 { top: 200px; left: 400px; }
+
+    .content-section {
+      height: 400px;
+      padding: 40px;
+      background-color: #f5f5f5;
+      border-top: 1px solid #ccc;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="map-container">
+    <div class="sector" id="sector1" onclick="scrollToSection('section1')"></div>
+    <div class="sector" id="sector2" onclick="scrollToSection('section2')"></div>
+    <div class="sector" id="sector3" onclick="scrollToSection('section3')"></div>
+    <div class="sector" id="sector4" onclick="scrollToSection('section4')"></div>
+    <div class="sector" id="sector5" onclick="scrollToSection('section5')"></div>
+    <div class="sector" id="sector6" onclick="scrollToSection('section6')"></div>
+  </div>
+
+  <div class="content-section" id="section1"><h2>Zone 1</h2><p>Details about Zone 1...
+
+
+
+
+
+
+
+
+    </p></div>
+  <div class="content-section" id="section2"><h2>Zone 2</h2><p>Details about Zone 2...
+
+
+
+
+
+
+
+
+    </p></div>
+  <div class="content-section" id="section3"><h2>Zone 3</h2><p>Details about Zone 3...
+
+
+
+
+
+
+
+
+    </p></div>
+  <div class="content-section" id="section4"><h2>Zone 4</h2><p>Details about Zone 4...
+
+
+
+
+
+
+
+
+    </p></div>
+  <div class="content-section" id="section5"><h2>Zone 5</h2><p>Details about Zone 5...
+
+
+
+
+
+
+
+
+    </p></div>
+  <div class="content-section" id="section6"><h2>Zone 6</h2><p>Details about Zone 6...
+
+
+
+
+
+
+
+
+
+  </p></div>
+
+  <script>
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
