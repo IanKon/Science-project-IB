@@ -2,58 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Map Sector Scroll</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Map Explorer</title>
   <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+    }
+
     body {
-      font-family: Arial;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
     }
 
     .map-container {
       position: relative;
-      width: 600px;
-      height: 400px;
+      width: 90%;
+      max-width: 800px;
+      height: 500px;
       background-image: url(/Users/ian-kononenko/Downloads/210AFA3F-FBBD-4B0A-AFC2-340CD868470A.png);
       background-size: cover;
-      border: 2px solid #444;
-      margin: 20px auto;
+      background-position: center;
+      border: 3px solid var(--dark-color);
+      border-radius: 8px;
+      margin: 30px auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      overflow: hidden;
     }
 
     .sector {
       position: absolute;
-      width: 200px;
-      height: 200px;
-      border: 2px solid red;
+      width: calc(100% / 3);
+      height: 50%;
+      border: 2px solid var(--accent-color);
       cursor: pointer;
       opacity: 0.3;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: transparent;
+      font-size: 1.2rem;
+    }
+
+    .sector:hover {
+      opacity: 0.7;
+      background-color: rgba(231, 76, 60, 0.2);
+      color: white;
+      text-shadow: 1px 1px 3px black;
     }
 
     #sector1 { top: 0; left: 0; }
-    #sector2 { top: 0; left: 200px; }
-    #sector3 { top: 0; left: 400px; }
-    #sector4 { top: 200px; left: 0; }
-    #sector5 { top: 200px; left: 200px; }
-    #sector6 { top: 200px; left: 400px; }
+    #sector2 { top: 0; left: calc(100% / 3); }
+    #sector3 { top: 0; left: calc(100% * 2 / 3); }
+    #sector4 { top: 50%; left: 0; }
+    #sector5 { top: 50%; left: calc(100% / 3); }
+    #sector6 { top: 50%; left: calc(100% * 2 / 3); }
 
     .content-section {
-      height: 400px;
-      padding: 40px;
-      background-color: #f5f5f5;
+      min-height: 400px;
+      padding: 60px 10%;
+      background-color: var(--light-color);
       border-top: 1px solid #ccc;
+      transition: background-color 0.5s ease;
+    }
+
+    .content-section:nth-child(even) {
+      background-color: white;
+    }
+
+    .content-section.active {
+      background-color: #fffde7;
     }
 
     h2 {
       margin-top: 0;
+      color: var(--primary-color);
+      font-size: 2rem;
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 10px;
+      display: inline-block;
     }
 
     .back-to-top {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      width: 50px;
-      height: 50px;
-      background-color: #444;
+      width: 60px;
+      height: 60px;
+      background-color: var(--accent-color);
       color: white;
       border-radius: 50%;
       display: flex;
@@ -63,11 +120,15 @@
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 100;
+      border: none;
+      outline: none;
     }
 
     .back-to-top:hover {
-      background-color: #666;
+      background-color: #c0392b;
+      transform: translateY(-3px);
     }
 
     .back-to-top.visible {
@@ -77,37 +138,163 @@
 
     .back-to-top::after {
       content: "↑";
-      font-size: 24px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 5px;
+      background: #ddd;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .progress-bar {
+      height: 5px;
+      background: var(--secondary-color);
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    .section-nav {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      z-index: 90;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-nav-button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #95a5a6;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px #bdc3c7;
+    }
+
+    .section-nav-button.active {
+      background-color: var(--accent-color);
+      transform: scale(1.3);
+    }
+
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 768px) {
+      .map-container {
+        height: 300px;
+      }
+      
+      .content-section {
+        padding: 40px 5%;
+      }
+      
+      .section-nav {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div id="section0"><h1>Sectors:</h1></div>
-
-  <div class="map-container">
-    <div class="sector" id="sector1" onclick="scrollToSection('section1')"></div>
-    <div class="sector" id="sector2" onclick="scrollToSection('section2')"></div>
-    <div class="sector" id="sector3" onclick="scrollToSection('section3')"></div>
-    <div class="sector" id="sector4" onclick="scrollToSection('section4')"></div>
-    <div class="sector" id="sector5" onclick="scrollToSection('section5')"></div>
-    <div class="sector" id="sector6" onclick="scrollToSection('section6')"></div>
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
   </div>
 
-  <div class="content-section" id="section1"><h2>Zone 1</h2><p>Details about Zone 1...</p></div>
-  <div class="content-section" id="section2"><h2>Zone 2</h2><p>Details about Zone 2...</p></div>
-  <div class="content-section" id="section3"><h2>Zone 3</h2><p>Details about Zone 3...</p></div>
-  <div class="content-section" id="section4"><h2>Zone 4</h2><p>Details about Zone 4...</p></div>
-  <div class="content-section" id="section5"><h2>Zone 5</h2><p>Details about Zone 5...</p></div>
-  <div class="content-section" id="section6"><h2>Zone 6</h2><p>Details about Zone 6...</p></div>
+  <header id="section0">
+    <h1>Interactive Map Explorer</h1>
+    <p>Click on map sectors to learn more about each zone</p>
+  </header>
+
+  <div class="map-container">
+    <div class="sector" id="sector1" onclick="scrollToSection('section1')">Zone 1</div>
+    <div class="sector" id="sector2" onclick="scrollToSection('section2')">Zone 2</div>
+    <div class="sector" id="sector3" onclick="scrollToSection('section3')">Zone 3</div>
+    <div class="sector" id="sector4" onclick="scrollToSection('section4')">Zone 4</div>
+    <div class="sector" id="sector5" onclick="scrollToSection('section5')">Zone 5</div>
+    <div class="sector" id="sector6" onclick="scrollToSection('section6')">Zone 6</div>
+  </div>
+
+  <div class="section-nav">
+    <div class="section-nav-button" onclick="scrollToSection('section1')" data-section="section1"></div>
+    <div class="section-nav-button" onclick="scrollToSection('section2')" data-section="section2"></div>
+    <div class="section-nav-button" onclick="scrollToSection('section3')" data-section="section3"></div>
+    <div class="section-nav-button" onclick="scrollToSection('section4')" data-section="section4"></div>
+    <div class="section-nav-button" onclick="scrollToSection('section5')" data-section="section5"></div>
+    <div class="section-nav-button" onclick="scrollToSection('section6')" data-section="section6"></div>
+  </div>
+
+  <div class="content-section" id="section1">
+    <h2>Zone 1</h2>
+    <p>Detailed information about Zone 1. This area is known for its unique characteristics and features that set it apart from other zones.</p>
+    <p>Additional details can be added here to provide comprehensive information about this sector.</p>
+  </div>
+  <div class="content-section" id="section2">
+    <h2>Zone 2</h2>
+    <p>Detailed information about Zone 2. This area is known for its unique characteristics and features that set it apart from other zones.</p>
+    <p>Additional details can be added here to provide comprehensive information about this sector.</p>
+  </div>
+  <div class="content-section" id="section3">
+    <h2>Zone 3</h2>
+    <p>Detailed information about Zone 3. This area is known for its unique characteristics and features that set it apart from other zones.</p>
+    <p>Additional details can be added here to provide comprehensive information about this sector.</p>
+  </div>
+  <div class="content-section" id="section4">
+    <h2>Zone 4</h2>
+    <p>Detailed information about Zone 4. This area is known for its unique characteristics and features that set it apart from other zones.</p>
+    <p>Additional details can be added here to provide comprehensive information about this sector.</p>
+  </div>
+  <div class="content-section" id="section5">
+    <h2>Zone 5</h2>
+    <p>Detailed information about Zone 5. This area is known for its unique characteristics and features that set it apart from other zones.</p>
+    <p>Additional details can be added here to provide comprehensive information about this sector.</p>
+  </div>
+  <div class="content-section" id="section6">
+    <h2>Zone 6</h2>
+    <p>Detailed information about Zone 6. This area is known for its unique characteristics and features that set it apart from other zones.</p>
+    <p>Additional details can be added here to provide comprehensive information about this sector.</p>
+  </div>
 
   <div class="back-to-top" onclick="scrollToSection('section0')"></div>
+
+  <footer>
+    <p>&copy; 2023 Interactive Map Explorer | All Rights Reserved</p>
+  </footer>
 
   <script>
     function scrollToSection(id) {
       document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+      
+      // Highlight active section in navigation
+      const navButtons = document.querySelectorAll('.section-nav-button');
+      navButtons.forEach(button => {
+        button.classList.remove('active');
+        if (button.getAttribute('data-section') === id) {
+          button.classList.add('active');
+        }
+      });
+      
+      // Highlight content section
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
     }
 
+    // Show/hide back to top button
     window.addEventListener('scroll', function() {
       const backToTopButton = document.querySelector('.back-to-top');
       const section1 = document.getElementById('section1');
@@ -118,8 +305,50 @@
       } else {
         backToTopButton.classList.remove('visible');
       }
+      
+      // Update progress bar
+      updateProgressBar();
+      
+      // Update section navigation
+      updateSectionNavigation();
+    });
+
+    // Progress bar functionality
+    function updateProgressBar() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    }
+
+    // Section navigation highlighting
+    function updateSectionNavigation() {
+      const sections = document.querySelectorAll('.content-section');
+      const navButtons = document.querySelectorAll('.section-nav-button');
+      
+      let currentSection = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (window.pageYOffset >= sectionTop - sectionHeight/3) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+      
+      navButtons.forEach(button => {
+        button.classList.remove('active');
+        if (button.getAttribute('data-section') === currentSection) {
+          button.classList.add('active');
+        }
+      });
+    }
+
+    // Initialize active section on load
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('.section-nav-button[data-section="section1"]').classList.add('active');
     });
   </script>
-
 </body>
 </html>
