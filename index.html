@@ -698,68 +698,177 @@
 
   <section class="content-section" id="section2">
     <div class="section-bg" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?center=40.7128,-74.0060&zoom=12&size=800x600&maptype=terrain&key=YOUR_API_KEY')"></div>
-    <div class="section-content">
-      <h2>ZONE 2</h2>
-      <div style="background: white; padding: 25px; border-radius: 8px; margin: 25px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.05); overflow-x: auto;">
-        <h3 style="color: #16a085; margin-top: 0;">Notes, Ashish Kurian Nathan - Design and Technology </h3>
-        <h4 style="color: #2980b9;">Egovernance terms</h4>
-        <p style="line-height: 1.6;">Have many people use it.</p>
+    <title>Nathan's Comparative Table</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
         
-        <h4 style="color: #2980b9;">Egoverned</h4>
-        <ul style="line-height: 1.6;">
-            <li>Material</li>
-            <li>Sustainability</li>
-            <li>Stock innovation environment</li>
-            <li>Authorities:
-                <ul>
-                    <li>Requirements</li>
-                    <li>Images: Measurements</li>
-                </ul>
-            </li>
-        </ul>
-    
-        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-            <thead>
-                <tr style="background-color: #3498db; color: white;">
-                    <th style="padding: 12px 15px; text-align: left;">Name</th>
-                    <th style="padding: 12px 15px; text-align: left;">Number</th>
-                    <th style="padding: 12px 15px; text-align: left;">Status</th>
-                    <th style="padding: 12px 15px; text-align: left;">Pricing Code</th>
-                    <th style="padding: 12px 15px; text-align: left;">Sending</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 12px 15px; font-weight: bold;">Egovernance</td>
-                    <td style="padding: 12px 15px;">The egovernance of the executive board is working, taking, and maintaining its voting strategy.</td>
-                    <td style="padding: 12px 15px;">The egovernance with a branch to identify future employees who are under our voting charter and/or present on-site.</td>
-                    <td style="padding: 12px 15px;">The principal part ensures safety and resources, consistent at a transaction length with cost spot and point prices.</td>
-                    <td style="padding: 12px 15px;">The egovernance of the branch by issuing a first year simple sentence or combination for setting out for multiple projects to sit on.</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 12px 15px; font-weight: bold;">Total announcements</td>
-                    <td style="padding: 12px 15px;">The full annual announcements have been given in accordance with applicable legislation.</td>
-                    <td style="padding: 12px 15px;">Concerns</td>
-                    <td style="padding: 12px 15px;">Retail (Stock or Aluminum), Plastic, Rubber/Frami Packing, and Glass</td>
-                    <td style="padding: 12px 15px;">Word</td>
-                </tr>
-                <tr style="border-bottom: 1px solid #eee;">
-                    <td style="padding: 12px 15px; font-weight: bold;">Shareholder</td>
-                    <td style="padding: 12px 15px;">The shareholder is responsible for the Company's shareholding, which has been incorporated into the Company.</td>
-                    <td style="padding: 12px 15px;">The Board has not conferred which is available, but contemplates strength and fair qualifications for regular</td>
-                    <td style="padding: 12px 15px;">Pricing dates are made with recyclable metals and durable plastics designed for long term IT managed correctly.</td>
-                    <td style="padding: 12px 15px;">Prints, and Restaurants</td>
-                </tr>
-                <tr>
-                    <td style="padding: 12px 15px; font-weight: bold;">Shareholder environment</td>
-                    <td style="padding: 12px 15px;">The shareholder is responsible for the Company's shareholding, which has been incorporated into the Company.</td>
-                    <td style="padding: 12px 15px;">The Board has not conferred which is available, but contemplates strength and fair qualifications for regular</td>
-                    <td style="padding: 12px 15px;">This stage is re-designed as an 'exercised pool' housing a unified mechanism and business as an Gartner, and Private Special Charges</td>
-                    <td style="padding: 12px 15px;">Length: !97cm Width:50cm</td>
-                </tr>
-            </tbody>
-        </table>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-content {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            text-align: center;
+            font-size: 28px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow-x: auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .comparison-table th:first-child,
+        .comparison-table td:first-child {
+            background-color: #f2f6f9;
+            font-weight: bold;
+        }
+        
+        .comparison-table th {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+        
+        .header-row {
+            background-color: #2980b9;
+            color: white;
+        }
+        
+        .sub-header {
+            background-color: #e9f2fa;
+            font-weight: bold;
+        }
+        
+        .measurements {
+            font-style: italic;
+            color: #666;
+        }
+        
+        .responsive-wrapper {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="margin-top: 40px;">ZONE 2</h2>
+    <div class="container">
+        <div class="section-content">
+            <h2>Nathan - Design and Technology Comparison</h2>
+            
+            <div class="responsive-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr class="header-row">
+                            <th>Category</th>
+                            <th>Bus Stand</th>
+                            <th>Bench</th>
+                            <th>Parking Gate</th>
+                            <th>Bench 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="sub-header">
+                            <td>Ergonomic Items</td>
+                            <td>Designed where many people use it</td>
+                            <td>3 to 4 people</td>
+                            <td>Multiple Cars</td>
+                            <td>3 to 4 people</td>
+                        </tr>
+                        <tr>
+                            <td>Ergonomics</td>
+                            <td>This ergonomics of a bus stand focuses for comfort, safety, and accessibility by having rooftop, seating area, and a trash can nearby</td>
+                            <td>The ergonomics of the bench by having a flat yet simple surface comfortable for sitting built for multiple people to sit on</td>
+                            <td>The parking gate ensures safety and convenience, positioned at a comfortable height with clear signs and good lighting</td>
+                            <td>The ergonomics of the bench by having a flat yet simple surface comfortable for sitting built for multiple people to sit on</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <td>Metal frames/benches, Glass or Polycarbonate panels, and concrete bases</td>
+                            <td>Concrete</td>
+                            <td>Metal (Steel or Aluminum), Plastic, Rubber/Foam Padding, and Glass</td>
+                            <td>Wood</td>
+                        </tr>
+                        <tr>
+                            <td>Sustainability</td>
+                            <td>The bus stands use recycled steel, aluminium, polycarbonate, and reclaimed wood reduce environmental impact</td>
+                            <td>The Bench uses concrete which is durable, has compressive strength and low maintenance to repair</td>
+                            <td>Parking gates are made with recyclable metals and durable plastics designed for long term if managed correctly</td>
+                            <td>Parks, and Restaurants</td>
+                        </tr>
+                        <tr>
+                            <td>Shape</td>
+                            <td>The shape is rectangular with no curves at all</td>
+                            <td>The shape is rectangular with curves on the side</td>
+                            <td>The shape is rectangular with a vertical post housing a control mechanism and horizontal arm</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Interactive environment</td>
+                            <td>etc.</td>
+                            <td>Cafés, restaurantes, parks, etc</td>
+                            <td>Garages, and Parking Spaces/Garages</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Aesthetics</td>
+                            <td>The bus stand features a dark metal, which matches the aesthetics of the background</td>
+                            <td>The bench is light beige or an off white color</td>
+                            <td>features a red and white strips connected an orange box</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Measurements</td>
+                            <td class="measurements">Length: 300cm Width: 70cm</td>
+                            <td class="measurements">Length 195.5cm Width: 49.5cm</td>
+                            <td class="measurements">Length: 421cm Width: 98cm</td>
+                            <td class="measurements">Length: 197cm Width:50cm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</body>
     </div>
     <div style="background: white; padding: 25px; border-radius: 8px; margin: 25px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
         <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
